@@ -144,8 +144,8 @@
 			isa = PBXGroup;
 			children = (
 				9E31B68F2803A82700ADBA23 /* LocalState.swift */,
-				9E31B69128042D0300ADBA23 /* UIViewController+Utils.swift */,
 				9E31B72C280619C100ADBA23 /* DecimalUtil.swift */,
+				9E31B69128042D0300ADBA23 /* UIViewController+Utils.swift */,
 				9E31B72E28061A0C00ADBA23 /* CurrencyFormatter.swift */,
 			);
 			path = Utils;
