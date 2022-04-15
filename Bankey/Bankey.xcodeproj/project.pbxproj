@@ -34,6 +34,8 @@
 		9E48313C2808B67200FA6A39 /* AccountTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E48313B2808B67200FA6A39 /* AccountTests.swift */; };
 		9E4F6CA82809789A00D81BD6 /* SkeletonLoadable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E4F6CA72809789A00D81BD6 /* SkeletonLoadable.swift */; };
 		9E4F6CAA2809791D00D81BD6 /* SkeletonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E4F6CA92809791D00D81BD6 /* SkeletonCell.swift */; };
+		9E4F6CAD2809853300D81BD6 /* ProfileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E4F6CAC2809853300D81BD6 /* ProfileManager.swift */; };
+		9E4F6CAF2809868C00D81BD6 /* AccountSummaryViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E4F6CAE2809868C00D81BD6 /* AccountSummaryViewControllerTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -77,6 +79,8 @@
 		9E48313B2808B67200FA6A39 /* AccountTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountTests.swift; sourceTree = "<group>"; };
 		9E4F6CA72809789A00D81BD6 /* SkeletonLoadable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkeletonLoadable.swift; sourceTree = "<group>"; };
 		9E4F6CA92809791D00D81BD6 /* SkeletonCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkeletonCell.swift; sourceTree = "<group>"; };
+		9E4F6CAC2809853300D81BD6 /* ProfileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileManager.swift; sourceTree = "<group>"; };
+		9E4F6CAE2809868C00D81BD6 /* AccountSummaryViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountSummaryViewControllerTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -180,6 +184,7 @@
 				9E4831352808325700FA6A39 /* AccountSummaryViewController+Networking.swift */,
 				9E31B6E628058D0E00ADBA23 /* Header */,
 				9E31B6E728058D4700ADBA23 /* Cells */,
+				9E4F6CAB2809851600D81BD6 /* Networking */,
 			);
 			path = AccountSummary;
 			sourceTree = "<group>";
@@ -233,8 +238,17 @@
 			children = (
 				9E4831392808B54B00FA6A39 /* ProfileTests.swift */,
 				9E48313B2808B67200FA6A39 /* AccountTests.swift */,
+				9E4F6CAE2809868C00D81BD6 /* AccountSummaryViewControllerTests.swift */,
 			);
 			path = AccountSummary;
+			sourceTree = "<group>";
+		};
+		9E4F6CAB2809851600D81BD6 /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				9E4F6CAC2809853300D81BD6 /* ProfileManager.swift */,
+			);
+			path = Networking;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -342,6 +356,7 @@
 				9E31B69228042D0300ADBA23 /* UIViewController+Utils.swift in Sources */,
 				9E4F6CAA2809791D00D81BD6 /* SkeletonCell.swift in Sources */,
 				9E4831342808308D00FA6A39 /* Date+Utils.swift in Sources */,
+				9E4F6CAD2809853300D81BD6 /* ProfileManager.swift in Sources */,
 				9E23B68F28003807007EF586 /* LoginView.swift in Sources */,
 				9E31B6902803A82700ADBA23 /* LocalState.swift in Sources */,
 				9E31B72D280619C100ADBA23 /* Decimal+Util.swift in Sources */,
@@ -370,6 +385,7 @@
 				9E43F2A728064ECC008CD00C /* CurrencyFormatterTests.swift in Sources */,
 				9E48313C2808B67200FA6A39 /* AccountTests.swift in Sources */,
 				9E48313A2808B54B00FA6A39 /* ProfileTests.swift in Sources */,
+				9E4F6CAF2809868C00D81BD6 /* AccountSummaryViewControllerTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
