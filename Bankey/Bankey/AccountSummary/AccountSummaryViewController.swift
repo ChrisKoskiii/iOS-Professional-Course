@@ -115,83 +115,107 @@ extension AccountSummaryViewController: UITableViewDataSource {
     return accountCellViewModels.count
   }
 }
-  
-  extension AccountSummaryViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-      
-    }
-  }
-  
-  // MARK: Actions
-  extension AccountSummaryViewController {
-    @objc func logoutTapped(sender: UIButton) {
-      NotificationCenter.default.post(name: .logout, object: nil)
-    }
 
-    @objc func refreshContent() {
-      reset()
-      setupSkeletons()
-      tableView.reloadData()
-      fetchData()
-    }
+extension AccountSummaryViewController: UITableViewDelegate {
+  func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     
-    private func reset() {
-      profile = nil
-      accounts = []
-      isLoaded = false
-    }
+  }
+}
+
+// MARK: Actions
+extension AccountSummaryViewController {
+  @objc func logoutTapped(sender: UIButton) {
+    NotificationCenter.default.post(name: .logout, object: nil)
   }
   
-  // MARK: Networking
-  extension AccountSummaryViewController {
-    private func fetchData() {
-      let group = DispatchGroup()
-      
-      let userId = String(Int.random(in: 1..<4))
-      
-      group.enter()
-      fetchProfile(forUserId: userId) { result in
-        switch result {
-        case .success(let profile):
-          self.profile = profile
-        case .failure(let error):
-          print(error.localizedDescription)
-        }
+  @objc func refreshContent() {
+    reset()
+    setupSkeletons()
+    tableView.reloadData()
+    fetchData()
+  }
+  
+  private func reset() {
+    profile = nil
+    accounts = []
+    isLoaded = false
+  }
+}
+
+// MARK: Networking
+extension AccountSummaryViewController {
+  private func fetchData() {
+    let group = DispatchGroup()
+    
+    let userId = String(Int.random(in: 1..<4))
+    
+    group.enter()
+    fetchProfile(forUserId: userId) { result in
+      switch result {
+      case .success(let profile):
+        self.profile = profile
+        self.configureTableHeaderView(with: profile)
+      case .failure(let error):
+        self.displayError(error)
       }
       group.leave()
-      
-      group.enter()
-      fetchAccounts(forUserId: userId) { result in
-        switch result {
-        case .success(let accounts):
-          self.accounts = accounts
-        case .failure(let error):
-          print(error.localizedDescription)
-        }
-        group.leave()
+    }
+    group.enter()
+    fetchAccounts(forUserId: userId) { result in
+      switch result {
+      case .success(let accounts):
+        self.accounts = accounts
+      case .failure(let error):
+        print(error.localizedDescription)
       }
-      
-      group.notify(queue: .main) {
-          self.tableView.refreshControl?.endRefreshing()
-          
-          guard let profile = self.profile else { return }
-          
-          self.isLoaded = true
-          self.configureTableHeaderView(with: profile)
-          self.configureTableCells(with: self.accounts)
-          self.tableView.reloadData()
-      }
+      group.leave()
     }
     
-    private func configureTableHeaderView(with profile: Profile) {
-      let vm = AccountSummaryHeaderView.ViewModel(welcomeMessage: "Good Morning", name: profile.firstName, date: Date())
+    group.notify(queue: .main) {
+      self.tableView.refreshControl?.endRefreshing()
       
-      headerView.configure(viewModel: vm)
-    }
-    
-    private func configureTableCells(with accounts: [Account]) {
-      accountCellViewModels = accounts.map {
-        AccountSummaryCell.ViewModel(accountType: $0.type, accountName: $0.name, balance: $0.amount)
-      }
+      guard let profile = self.profile else { return }
+      
+      self.isLoaded = true
+      self.configureTableHeaderView(with: profile)
+      self.configureTableCells(with: self.accounts)
+      self.tableView.reloadData()
     }
   }
+  
+  private func configureTableHeaderView(with profile: Profile) {
+    let vm = AccountSummaryHeaderView.ViewModel(welcomeMessage: "Good Morning", name: profile.firstName, date: Date())
+    
+    headerView.configure(viewModel: vm)
+  }
+  
+  private func configureTableCells(with accounts: [Account]) {
+    accountCellViewModels = accounts.map {
+      AccountSummaryCell.ViewModel(accountType: $0.type, accountName: $0.name, balance: $0.amount)
+    }
+  }
+  
+  private func displayError(_ error: NetworkError) {
+    let title: String
+    let message: String
+    switch error {
+    case.serverError:
+      title = "Server Error"
+      message = " Ensure you are connected to the internet. Please try again."
+    case .decodingError:
+      title = "Decoding Error"
+      message = "We could not process your request. Please try again."
+    }
+    self.showErrorAlert(title: title, message: message)
+  }
+  
+  private func showErrorAlert(title: String, message: String) {
+    let alert = UIAlertController(title: title,
+                                  message: message,
+                                  preferredStyle: .alert)
+    
+    alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+    
+    present(alert, animated: true, completion: nil)
+  }
+}
